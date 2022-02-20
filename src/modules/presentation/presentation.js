@@ -1,13 +1,19 @@
-import { Bilzaa2d, XAlignment, YAlignment } from "../../node_modules/bilzaa2d/src/bilzaa2d/index.js";
-import Text from "../components/text/text.js";
-import { GridTemplates } from "../components/grid/grid.js";
-import FrameCounter from "../components/frameCounter/frameCounter.js";
+import { Bilzaa2d, XAlignment, YAlignment } from "../../../node_modules/bilzaa2d/src/bilzaa2d/index.js";
+import Text from "../../components/text/text.js";
+import { GridTemplates } from "../../components/grid/grid.js";
+import FrameCounter from "../../components/frameCounter/frameCounter.js";
 export default class Presentation {
     constructor() {
         this.bilzaa = new Bilzaa2d();
     }
     constructors() {
         this.bilzaa = new Bilzaa2d();
+    }
+    // a slide is a clip - in this module (presentation) a clip is slide
+    addClip(clips) {
+        for (let i = 0; i < clips.length; i++) {
+            this.bilzaa.add(clips[i]);
+        }
     }
     add(f) {
         this.bilzaa.add(f);
@@ -16,7 +22,10 @@ export default class Presentation {
         this.bilzaa.add(GridTemplates.dashedGrid());
     }
     addFrameCounter() {
-        this.bilzaa.add(new FrameCounter());
+        let f = new FrameCounter();
+        f.x = 90;
+        f.y = 95;
+        this.bilzaa.add(f);
     }
     h1mid(content, frameStart = 1, frameEnd = 100, fontSize = 80, fontColor = "red", underlineColor = "green", y = 15) {
         let f = new Text(content);

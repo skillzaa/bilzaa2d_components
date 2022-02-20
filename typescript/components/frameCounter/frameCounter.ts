@@ -36,7 +36,7 @@ draw(p: Pack): boolean {
 // it is upto the component author to use xPerc    
 let x = p.xPerc(this.x);    
 let y = p.yPerc(this.y);    
-    let s = "Frame : " + this.frame
+    let s = "Frame:" + this.frame
 p.drawFillRect(x,y,this.width(p)+ this.padding,this.height(p)+this.padding, this.styleRectangle); 
 
 p.drawText(s,x + (this.padding/2),y + (this.padding/2),this.styleNumbers);

@@ -1,7 +1,8 @@
-import { Bilzaa2d, IDrawable } from "../../node_modules/bilzaa2d/src/bilzaa2d/index.js";
+import { Bilzaa2d, IDrawable } from "../../../node_modules/bilzaa2d/src/bilzaa2d/index.js";
 export default class Presentation {
     bilzaa: Bilzaa2d;
     constructors(): void;
+    addClip(clips: IDrawable[]): void;
     add(f: IDrawable): void;
     addGrid(): void;
     addFrameCounter(): void;
