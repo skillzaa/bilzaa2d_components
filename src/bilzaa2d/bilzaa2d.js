@@ -2,25 +2,26 @@ import Pack from "./pack/pack.js";
 import { DrawLayer } from "./design/drawLayer.js";
 import Background from "./background.js";
 export default class Bilzaa2d {
-    constructor() {
+    constructor(totalFrames = 50) {
         this.pack = new Pack();
         this.comps = [];
         this.background = new Background();
-        this.totalFrames = 50; //5min
+        this.totalFrames = totalFrames;
         this.frame = 0;
         this.interval = 0;
         this.mspf = 1000;
     }
     draw() {
         this.frame += 1; /// importanto
+        //stop if completed
         if (this.frame >= this.totalFrames) {
             this.stop();
         }
-        let c = this.pack;
-        c.clearCanvas();
-        c.drawBackground(this.background.color);
+        this.pack.clearCanvas();
+        this.pack.drawBackground(this.background.color);
         this.drawBackgroundComps();
         this.drawMiddlegroundComps();
+        this.drawForegroundComps();
         return true;
     }
     drawMiddlegroundComps() {
@@ -32,9 +33,7 @@ export default class Bilzaa2d {
                     this.pack.save();
                     comp.update(this.frame, this.pack);
                     comp.draw(this.pack);
-                    //--keep both unless resetCtx has all items
                     this.pack.restore();
-                    // this.pack.ctx().resetCtx();//why needed??
                 }
             }
         }
@@ -43,20 +42,26 @@ export default class Bilzaa2d {
     drawBackgroundComps() {
         for (let i = 0; i < this.comps.length; i++) {
             let comp = this.comps[i];
-            //--save ctx
-            this.pack.save();
             if (comp.drawLayer == DrawLayer.BackGround) {
+                this.pack.save();
+                comp.update(this.frame, this.pack);
                 comp.draw(this.pack);
             }
-            //--keep both unless resetCtx has all items
             this.pack.restore();
-            //--no width for background items
         }
         return true;
     }
-    add_comp(comp) {
-        this.comps.push(comp);
-        return comp;
+    drawForegroundComps() {
+        for (let i = 0; i < this.comps.length; i++) {
+            let comp = this.comps[i];
+            if (comp.drawLayer == DrawLayer.ForeGround) {
+                this.pack.save();
+                comp.update(this.frame, this.pack);
+                comp.draw(this.pack);
+            }
+            this.pack.restore();
+        }
+        return true;
     }
     add(comp) {
         this.comps.push(comp);

@@ -8,11 +8,11 @@ export default class Bilzaa2d {
     mspf: number;
     totalFrames: number;
     background: Background;
-    constructor();
+    constructor(totalFrames?: number);
     private draw;
     private drawMiddlegroundComps;
     private drawBackgroundComps;
-    add_comp(comp: IDrawable): IDrawable;
+    private drawForegroundComps;
     add(comp: IDrawable): IDrawable;
     start(): void;
     stop(): void;
